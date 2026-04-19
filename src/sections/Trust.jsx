@@ -30,15 +30,13 @@ export default function Trust() {
         scrollTrigger: { trigger: '.stats-grid', start: 'top 85%' },
       })
 
-      // Reason cards — stagger from left with slight rotation
+      // Reason cards
       gsap.from('.reason-card', {
-        x: -60,
-        opacity: 0,
-        rotateZ: -2,
-        duration: 0.7,
-        stagger: 0.12,
+        x: -30,
+        duration: 0.5,
+        stagger: 0.1,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '.reasons-grid', start: 'top 80%' },
+        scrollTrigger: { trigger: '.reasons-grid', start: 'top 95%' },
       })
     }, ref)
     return () => ctx.revert()

@@ -1,12 +1,6 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 
-const typeImg = {
-  Hotel: '/images/hotel-generic.jpg',
-  Restaurant: '/images/restaurant-generic.jpg',
-  Bakery: '/images/bakery-generic.jpg',
-}
-
 const typeColors = {
   Hotel: 'bg-amber-100 text-amber-800',
   Restaurant: 'bg-orange-100 text-orange-800',
@@ -14,18 +8,18 @@ const typeColors = {
 }
 
 const clients = [
-  { name: 'Mangala Vilas Hotel', type: 'Hotel', area: 'Kamarajanar Road, Attur' },
-  { name: 'A2B Veg Restaurant', type: 'Restaurant', area: 'Attur Bypass' },
-  { name: 'Hotel Junior Kuppanna', type: 'Hotel', area: 'Ammampalayam' },
-  { name: 'Mythili Mess', type: 'Restaurant', area: 'Chennai-Salem Bypass, Attur' },
-  { name: 'Paradise Multicuisine', type: 'Restaurant', area: 'Attur Main Road' },
-  { name: 'Iyarkai Family Restaurant', type: 'Restaurant', area: 'Pudupet' },
-  { name: 'Sri Arya Bhavan Sweets & Bakery', type: 'Bakery', area: 'Ranipet Main Road, Attur' },
-  { name: 'New Vijay Bakery', type: 'Bakery', area: 'Near Bus Stand, Attur' },
-  { name: 'New Vishnu Bakery', type: 'Bakery', area: 'Narasingapuram, Attur' },
-  { name: 'New Krishna Sweets & Bakery', type: 'Bakery', area: 'Attur' },
-  { name: 'Sri Saravana Sweets & Bakery', type: 'Bakery', area: 'Udayarpalayam' },
-  { name: 'Uma Sweets & Bakery', type: 'Bakery', area: 'Attur Bazaar' },
+  { name: 'Mangala Vilas Hotel', type: 'Hotel', area: 'Kamarajanar Road, Attur', img: '/images/hotel-dining.jpg' },
+  { name: 'A2B Veg Restaurant', type: 'Restaurant', area: 'Attur Bypass', img: '/images/restaurant-indian.jpg' },
+  { name: 'Hotel Junior Kuppanna', type: 'Hotel', area: 'Ammampalayam', img: '/images/hotel-lobby.jpg' },
+  { name: 'Mythili Mess', type: 'Restaurant', area: 'Chennai-Salem Bypass, Attur', img: '/images/restaurant-busy.jpg' },
+  { name: 'Paradise Multicuisine', type: 'Restaurant', area: 'Attur Main Road', img: '/images/restaurant-table.jpg' },
+  { name: 'Iyarkai Family Restaurant', type: 'Restaurant', area: 'Pudupet', img: '/images/restaurant-cafe.jpg' },
+  { name: 'Sri Arya Bhavan Sweets & Bakery', type: 'Bakery', area: 'Ranipet Main Road, Attur', img: '/images/bakery-sweets.jpg' },
+  { name: 'New Vijay Bakery', type: 'Bakery', area: 'Near Bus Stand, Attur', img: '/images/bakery-bread.jpg' },
+  { name: 'New Vishnu Bakery', type: 'Bakery', area: 'Narasingapuram, Attur', img: '/images/bakery-cakes.jpg' },
+  { name: 'New Krishna Sweets & Bakery', type: 'Bakery', area: 'Attur', img: '/images/bakery-pastry.jpg' },
+  { name: 'Sri Saravana Sweets & Bakery', type: 'Bakery', area: 'Udayarpalayam', img: '/images/bakery-cake2.jpg' },
+  { name: 'Uma Sweets & Bakery', type: 'Bakery', area: 'Attur Bazaar', img: '/images/bakery-generic.jpg' },
 ]
 
 export default function Clients() {
@@ -35,16 +29,14 @@ export default function Clients() {
     const ctx = gsap.context(() => {
       gsap.from('.client-card', {
         y: 20,
-        opacity: 0,
         duration: 0.4,
         stagger: 0.05,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '.clients-grid', start: 'top 95%' },
+        scrollTrigger: { trigger: '.clients-grid', start: 'top 95%', once: true },
       })
 
       gsap.from('.map-embed', {
         y: 40,
-        opacity: 0,
         duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: { trigger: '.map-embed', start: 'top 95%' },
@@ -76,7 +68,7 @@ export default function Clients() {
               {/* Photo */}
               <div className="h-28 overflow-hidden">
                 <img
-                  src={typeImg[c.type]}
+                  src={c.img}
                   alt={c.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

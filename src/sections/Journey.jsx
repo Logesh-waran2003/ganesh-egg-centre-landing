@@ -146,7 +146,7 @@ export default function Journey() {
                 </div>
 
                 {/* Image with clip reveal */}
-                <div className="journey-img w-full md:w-5/12 ml-16 md:ml-0 overflow-hidden rounded-2xl" style={{ clipPath: 'inset(0 0 0 0)' }}>
+                <div className="journey-img w-full md:w-5/12 pl-20 md:pl-0 md:ml-0 overflow-hidden rounded-2xl" style={{ clipPath: 'inset(0 0 0 0)' }}>
                   <div className="journey-img-inner aspect-[4/3] overflow-hidden">
                     <img
                       src={step.img}
@@ -157,7 +157,7 @@ export default function Journey() {
                 </div>
 
                 {/* Text */}
-                <div className={`journey-text w-full md:w-5/12 ml-16 md:ml-0 ${i % 2 === 1 ? 'md:text-right' : ''}`}>
+                <div className={`journey-text w-full md:w-5/12 pl-20 md:pl-0 md:ml-0 ${i % 2 === 0 ? 'md:pl-8' : 'md:pr-8 md:text-right'}`}>
                   <span className="journey-num font-[family-name:var(--font-display)] text-6xl font-900 text-saffron-200/50">
                     {step.num}
                   </span>
