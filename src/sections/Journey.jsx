@@ -36,35 +36,34 @@ export default function Journey() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading reveal
+      // Heading — staggered word reveal
       gsap.from(headingRef.current, {
         opacity: 0,
-        y: 50,
+        y: 60,
         duration: 1,
         ease: 'power3.out',
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: 'top 85%',
-        },
+        scrollTrigger: { trigger: headingRef.current, start: 'top 85%' },
       })
 
-      // Progress line grows as you scroll
+      // Progress line
       gsap.to(lineRef.current, {
         height: '100%',
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 60%',
-          end: 'bottom 80%',
-          scrub: true,
+          start: 'top 50%',
+          end: 'bottom 70%',
+          scrub: 0.5,
         },
       })
 
-      // Each step animates in
+      // Steps — horizontal image reveal + text slide
       gsap.utils.toArray('.journey-step').forEach((step, i) => {
         const img = step.querySelector('.journey-img')
+        const imgInner = step.querySelector('.journey-img-inner')
         const text = step.querySelector('.journey-text')
         const dot = step.querySelector('.journey-dot')
+        const num = step.querySelector('.journey-num')
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -74,19 +73,39 @@ export default function Journey() {
           },
         })
 
-        tl.from(dot, { scale: 0, duration: 0.4, ease: 'back.out(2)' })
-          .from(img, {
-            x: i % 2 === 0 ? -80 : 80,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-          }, '-=0.2')
-          .from(text, {
-            x: i % 2 === 0 ? 80 : -80,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-          }, '-=0.6')
+        // Dot pops
+        tl.from(dot, { scale: 0, duration: 0.5, ease: 'back.out(3)' })
+
+        // Image clip reveal (wipe from left/right)
+        tl.from(img, {
+          clipPath: i % 2 === 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)',
+          duration: 1,
+          ease: 'power4.inOut',
+        }, '-=0.3')
+
+        // Image subtle zoom
+        tl.from(imgInner, {
+          scale: 1.3,
+          duration: 1.2,
+          ease: 'power3.out',
+        }, '-=1')
+
+        // Number counter
+        tl.from(num, {
+          y: 20,
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power3.out',
+        }, '-=0.8')
+
+        // Text slides in
+        tl.from(text.children, {
+          y: 40,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power3.out',
+        }, '-=0.6')
       })
     }, sectionRef)
 
@@ -94,14 +113,14 @@ export default function Journey() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-24 md:py-32 bg-cream">
+    <section ref={sectionRef} className="relative py-28 md:py-40 bg-cream">
       <div className="max-w-6xl mx-auto px-6">
-        <div ref={headingRef} className="text-center mb-20">
-          <span className="text-saffron-600 text-sm font-semibold uppercase tracking-[0.3em]">Our Process</span>
-          <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl lg:text-6xl font-700 text-earth mt-3">
+        <div ref={headingRef} className="text-center mb-24">
+          <span className="text-saffron-600 text-xs font-semibold uppercase tracking-[0.4em]">Our Process</span>
+          <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl lg:text-7xl font-700 text-earth mt-4 leading-tight">
             Farm to Doorstep
           </h2>
-          <p className="mt-4 text-earth-light text-lg max-w-xl mx-auto">
+          <p className="mt-5 text-earth-light text-lg max-w-md mx-auto leading-relaxed">
             The journey every egg takes — from the farm at dawn to your hands by morning.
           </p>
         </div>
@@ -109,38 +128,40 @@ export default function Journey() {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-saffron-200 -translate-x-1/2">
-            <div ref={lineRef} className="w-full bg-saffron-500 h-0" />
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-saffron-200/60 -translate-x-1/2">
+            <div ref={lineRef} className="w-full bg-gradient-to-b from-saffron-500 to-saffron-300 h-0" />
           </div>
 
-          <div className="space-y-20 md:space-y-28">
+          <div className="space-y-24 md:space-y-32">
             {steps.map((step, i) => (
               <div
                 key={step.num}
-                className={`journey-step relative flex flex-col md:flex-row items-center gap-8 md:gap-16 ${
+                className={`journey-step relative flex flex-col md:flex-row items-center gap-10 md:gap-20 ${
                   i % 2 === 1 ? 'md:flex-row-reverse' : ''
                 }`}
               >
                 {/* Dot */}
-                <div className="journey-dot absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-saffron-500 border-4 border-cream z-10 shadow-lg shadow-saffron-500/30" />
+                <div className="journey-dot absolute left-8 md:left-1/2 -translate-x-1/2 z-10">
+                  <div className="w-5 h-5 rounded-full bg-saffron-500 border-[5px] border-cream shadow-lg shadow-saffron-500/40" />
+                </div>
 
-                {/* Image */}
-                <div className="journey-img w-full md:w-5/12 ml-14 md:ml-0">
-                  <div className="relative overflow-hidden rounded-2xl shadow-2xl shadow-black/10 aspect-[4/3]">
+                {/* Image with clip reveal */}
+                <div className="journey-img w-full md:w-5/12 ml-16 md:ml-0 overflow-hidden rounded-2xl" style={{ clipPath: 'inset(0 0 0 0)' }}>
+                  <div className="journey-img-inner aspect-[4/3] overflow-hidden">
                     <img
                       src={step.img}
                       alt={step.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-4 left-4 bg-saffron-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                      {step.num}
-                    </div>
                   </div>
                 </div>
 
                 {/* Text */}
-                <div className={`journey-text w-full md:w-5/12 ml-14 md:ml-0 ${i % 2 === 1 ? 'md:text-right' : ''}`}>
-                  <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-700 text-earth">
+                <div className={`journey-text w-full md:w-5/12 ml-16 md:ml-0 ${i % 2 === 1 ? 'md:text-right' : ''}`}>
+                  <span className="journey-num font-[family-name:var(--font-display)] text-6xl font-900 text-saffron-200/50">
+                    {step.num}
+                  </span>
+                  <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-700 text-earth -mt-3">
                     {step.title}
                   </h3>
                   <p className="mt-3 text-earth-light leading-relaxed text-lg">

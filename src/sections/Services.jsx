@@ -3,30 +3,16 @@ import gsap from 'gsap'
 
 const services = [
   {
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-12 h-12">
-        <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" strokeWidth="2.5" />
-        <path d="M4 18h40" stroke="currentColor" strokeWidth="2.5" />
-        <circle cx="16" cy="30" r="4" stroke="currentColor" strokeWidth="2" />
-        <circle cx="32" cy="30" r="4" stroke="currentColor" strokeWidth="2" />
-        <circle cx="24" cy="26" r="4" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    ),
     title: 'Wholesale Supply',
     desc: 'Bulk orders for hotels, bakeries, restaurants, and kirana shops. Competitive pricing with daily delivery guaranteed.',
-    highlight: '700+ trays/day',
+    highlight: 'Daily Bulk Delivery',
+    icon: '📦',
   },
   {
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" className="w-12 h-12">
-        <path d="M8 40V16l16-8 16 8v24" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" />
-        <rect x="18" y="26" width="12" height="14" stroke="currentColor" strokeWidth="2.5" />
-        <path d="M24 26v14" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    ),
     title: 'Retail Shop',
     desc: 'Walk in and pick up fresh eggs any day. Small quantities, fair prices, always in stock.',
-    highlight: 'Open 7 days',
+    highlight: 'Open Every Day',
+    icon: '🏪',
   },
 ]
 
@@ -35,17 +21,34 @@ export default function Services() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.utils.toArray('.service-card').forEach((card, i) => {
-        gsap.from(card, {
-          y: 60,
-          opacity: 0,
-          duration: 0.8,
-          delay: i * 0.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
-          },
+      // Cards slide up with stagger
+      gsap.from('.service-card', {
+        y: 80,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: ref.current,
+          start: 'top 75%',
+        },
+      })
+
+      // Hover tilt effect
+      document.querySelectorAll('.service-card').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect()
+          const x = (e.clientX - rect.left) / rect.width - 0.5
+          const y = (e.clientY - rect.top) / rect.height - 0.5
+          gsap.to(card, {
+            rotateY: x * 8,
+            rotateX: -y * 8,
+            duration: 0.3,
+            ease: 'power2.out',
+          })
+        })
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.5, ease: 'power3.out' })
         })
       })
     }, ref)
@@ -53,34 +56,34 @@ export default function Services() {
   }, [])
 
   return (
-    <section ref={ref} className="py-24 md:py-32 bg-gradient-to-b from-amber-950 to-[#2a1400]">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="fade-section text-center mb-16">
-          <span className="text-saffron-400 text-sm font-semibold uppercase tracking-[0.3em]">What We Do</span>
-          <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl lg:text-6xl font-700 text-white mt-3">
+    <section ref={ref} className="py-28 md:py-40 bg-gradient-to-b from-amber-950 to-[#1a0d00] grain relative">
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-20">
+          <span className="text-saffron-400/70 text-xs font-semibold uppercase tracking-[0.4em]">What We Do</span>
+          <h2 className="font-[family-name:var(--font-display)] text-4xl md:text-6xl lg:text-7xl font-700 text-white mt-4">
             Wholesale & Retail
           </h2>
-          <p className="mt-4 text-saffron-100/60 text-lg max-w-lg mx-auto">
+          <p className="mt-5 text-white/40 text-lg max-w-md mx-auto">
             Two ways to get the freshest eggs in town.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8" style={{ perspective: '1000px' }}>
           {services.map((s) => (
             <div
               key={s.title}
-              className="service-card group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 md:p-10 hover:bg-white/10 transition-all duration-500 hover:border-saffron-500/30"
+              className="service-card group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.08] rounded-3xl p-10 md:p-12 hover:bg-white/[0.07] transition-colors duration-500 hover:border-saffron-500/20"
+              style={{ transformStyle: 'preserve-3d' }}
             >
-              <div className="text-saffron-400 mb-6 group-hover:scale-110 transition-transform duration-300">
-                {s.icon}
-              </div>
+              <span className="text-5xl mb-6 block">{s.icon}</span>
               <h3 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-700 text-white">
                 {s.title}
               </h3>
-              <p className="mt-3 text-white/60 leading-relaxed text-base">
+              <p className="mt-4 text-white/50 leading-relaxed">
                 {s.desc}
               </p>
-              <div className="mt-6 inline-block bg-saffron-500/20 text-saffron-300 text-sm font-semibold px-4 py-2 rounded-full">
+              <div className="mt-8 inline-flex items-center gap-2 text-saffron-400 text-sm font-semibold">
+                <span className="w-8 h-px bg-saffron-400" />
                 {s.highlight}
               </div>
             </div>
