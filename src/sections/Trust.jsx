@@ -85,6 +85,23 @@ export default function Trust() {
             </div>
           ))}
         </div>
+
+        {/* Family photo */}
+        <div className="family-photo mt-20 max-w-md mx-auto text-center">
+          <div className="rounded-2xl overflow-hidden shadow-2xl shadow-saffron-500/10 border-4 border-white">
+            <img
+              src="/images/family-shop.jpg"
+              alt="Ganesh Egg Centre — Family Business since 25 years"
+              className="w-full h-auto object-cover"
+            />
+          </div>
+          <p className="mt-4 text-earth font-[family-name:var(--font-display)] text-lg font-600">
+            A Family Business, Built with Heart
+          </p>
+          <p className="mt-1 text-earth-light text-sm">
+            25 years of serving Attur — from our family to yours.
+          </p>
+        </div>
       </div>
     </section>
   )

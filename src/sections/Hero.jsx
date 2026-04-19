@@ -106,10 +106,10 @@ export default function Hero() {
 
       {/* Content */}
       <div className="hero-content relative z-10 text-center px-6 max-w-5xl">
-        <div className="overflow-hidden">
-          <h1 className="font-[family-name:var(--font-display)] text-6xl md:text-8xl lg:text-9xl font-900 text-white leading-[0.9] tracking-tight">
+        <div className="overflow-hidden pb-2">
+          <h1 className="font-[family-name:var(--font-display)] text-6xl md:text-8xl lg:text-9xl font-900 text-white leading-[0.95] tracking-tight">
             <span ref={line1Ref} className="block">Ganesh</span>
-            <span ref={line2Ref} className="block text-saffron-400 mt-2">Egg Centre</span>
+            <span ref={line2Ref} className="block text-saffron-400 mt-2 pb-3">Egg Centre</span>
           </h1>
         </div>
 

@@ -1,15 +1,25 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 
+const typeImg = {
+  Hotel: '/images/hotel-generic.jpg',
+  Restaurant: '/images/restaurant-generic.jpg',
+  Bakery: '/images/bakery-generic.jpg',
+}
+
+const typeColors = {
+  Hotel: 'bg-amber-100 text-amber-800',
+  Restaurant: 'bg-orange-100 text-orange-800',
+  Bakery: 'bg-rose-100 text-rose-800',
+}
+
 const clients = [
-  // Hotels & Restaurants
   { name: 'Mangala Vilas Hotel', type: 'Hotel', area: 'Kamarajanar Road, Attur' },
   { name: 'A2B Veg Restaurant', type: 'Restaurant', area: 'Attur Bypass' },
   { name: 'Hotel Junior Kuppanna', type: 'Hotel', area: 'Ammampalayam' },
   { name: 'Mythili Mess', type: 'Restaurant', area: 'Chennai-Salem Bypass, Attur' },
   { name: 'Paradise Multicuisine', type: 'Restaurant', area: 'Attur Main Road' },
   { name: 'Iyarkai Family Restaurant', type: 'Restaurant', area: 'Pudupet' },
-  // Bakeries & Sweets
   { name: 'Sri Arya Bhavan Sweets & Bakery', type: 'Bakery', area: 'Ranipet Main Road, Attur' },
   { name: 'New Vijay Bakery', type: 'Bakery', area: 'Near Bus Stand, Attur' },
   { name: 'New Vishnu Bakery', type: 'Bakery', area: 'Narasingapuram, Attur' },
@@ -18,24 +28,18 @@ const clients = [
   { name: 'Uma Sweets & Bakery', type: 'Bakery', area: 'Attur Bazaar' },
 ]
 
-const typeColors = {
-  Hotel: 'bg-amber-100 text-amber-800',
-  Restaurant: 'bg-orange-100 text-orange-800',
-  Bakery: 'bg-rose-100 text-rose-800',
-}
-
 export default function Clients() {
   const ref = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.client-card', {
-        y: 30,
+        y: 20,
         opacity: 0,
-        duration: 0.5,
-        stagger: 0.06,
+        duration: 0.4,
+        stagger: 0.05,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '.clients-grid', start: 'top 80%' },
+        scrollTrigger: { trigger: '.clients-grid', start: 'top 95%' },
       })
 
       gsap.from('.map-embed', {
@@ -43,7 +47,7 @@ export default function Clients() {
         opacity: 0,
         duration: 0.8,
         ease: 'power3.out',
-        scrollTrigger: { trigger: '.map-embed', start: 'top 85%' },
+        scrollTrigger: { trigger: '.map-embed', start: 'top 95%' },
       })
     }, ref)
     return () => ctx.revert()
@@ -62,24 +66,35 @@ export default function Clients() {
           </p>
         </div>
 
-        {/* Client cards */}
-        <div className="clients-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-16">
+        {/* Client cards with photos */}
+        <div className="clients-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {clients.map((c) => (
             <div
               key={c.name}
-              className="client-card bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] rounded-xl p-4 md:p-5 hover:bg-white/[0.1] hover:border-saffron-500/20 transition-all duration-300"
+              className="client-card group bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] rounded-xl overflow-hidden hover:bg-white/[0.1] hover:border-saffron-500/20 transition-all duration-300 hover:-translate-y-1"
             >
-              <span className={`inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${typeColors[c.type]}`}>
-                {c.type}
-              </span>
-              <h4 className="text-white font-semibold text-sm mt-2 leading-snug">{c.name}</h4>
-              <p className="text-white/40 text-xs mt-1">{c.area}</p>
+              {/* Photo */}
+              <div className="h-28 overflow-hidden">
+                <img
+                  src={typeImg[c.type]}
+                  alt={c.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              {/* Info */}
+              <div className="p-4">
+                <span className={`inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${typeColors[c.type]}`}>
+                  {c.type}
+                </span>
+                <h4 className="text-white font-semibold text-sm mt-2 leading-snug">{c.name}</h4>
+                <p className="text-white/40 text-xs mt-1">{c.area}</p>
+              </div>
             </div>
           ))}
         </div>
 
         {/* And more */}
-        <p className="text-center text-white/30 text-sm mb-16">
+        <p className="text-center text-white/30 text-sm mt-8 mb-16">
           …and 100+ grocery shops, tea stalls, and eateries across the Attur region.
         </p>
 
@@ -88,7 +103,7 @@ export default function Clients() {
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3907.5!2d78.6!3d11.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bab3cb1c1c1c1c1%3A0x1234567890abcdef!2sGanesh+Egg+Centre!5e0!3m2!1sen!2sin!4v1"
             width="100%"
-            height="400"
+            height="350"
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"
