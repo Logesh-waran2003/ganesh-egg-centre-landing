@@ -5,6 +5,7 @@ import Hero from './sections/Hero'
 import Journey from './sections/Journey'
 import Services from './sections/Services'
 import Trust from './sections/Trust'
+import Clients from './sections/Clients'
 import Contact from './sections/Contact'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -39,6 +40,7 @@ export default function App() {
       <Journey />
       <Services />
       <Trust />
+      <Clients />
       <Contact />
     </main>
   )

@@ -24,7 +24,7 @@ const steps = [
   {
     num: '04',
     title: 'At Your Shop & Table',
-    desc: 'From our retail counter or your neighbourhood kirana — Ganesh eggs reach you the same day they leave the farm.',
+    desc: 'From our retail counter or your neighbourhood grocery shop — Ganesh eggs reach you the same day they leave the farm.',
     img: '/images/shop-retail.jpg',
   },
 ]

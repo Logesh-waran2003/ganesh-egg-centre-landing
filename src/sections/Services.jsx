@@ -4,7 +4,7 @@ import gsap from 'gsap'
 const services = [
   {
     title: 'Wholesale Supply',
-    desc: 'Bulk orders for hotels, bakeries, restaurants, and kirana shops. Competitive pricing with daily delivery guaranteed.',
+    desc: 'Bulk orders for hotels, bakeries, restaurants, and grocery shops. Competitive pricing with daily delivery guaranteed.',
     highlight: 'Daily Bulk Delivery',
     icon: '📦',
   },

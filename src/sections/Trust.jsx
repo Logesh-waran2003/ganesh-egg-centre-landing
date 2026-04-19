@@ -3,7 +3,7 @@ import gsap from 'gsap'
 
 const stats = [
   { value: '25+', label: 'Years of Trust' },
-  { value: '6', label: 'Days a Week' },
+  { value: '7', label: 'Days a Week' },
   { value: '100+', label: 'Happy Customers' },
   { value: '1', label: 'Promise: Freshness' },
 ]
